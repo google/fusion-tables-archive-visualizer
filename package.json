@@ -1,0 +1,43 @@
+{
+  "name": "fusion-tables-archive-visualizer",
+  "description": "Visualize archived Fusion Tables from Google Drive",
+  "version": "1.0.0",
+  "license": "",
+  "author": "Ubilabs",
+  "engines": {
+    "node": ">=10"
+  },
+  "repository": "https://github.com/ubilabs/fusion-tables-archive-visualizer",
+  "private": true,
+  "scripts": {
+    "start": "parcel --no-hmr --no-autoinstall ./src/index.html",
+    "build": "parcel build ./src/index.html",
+    "prettier:ci": "prettier --list-different './src/**/*.ts'",
+    "prettier:fix": "prettier --write './src/**/*.ts'",
+    "deploy": "yarn run test && yarn run build && echo 'No deployment configured.'",
+    "test": "yarn run prettier:ci && tslint -p . -e '**/*.json'"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "bracketSpacing": false
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@danmarshall/deckgl-typings": "^2.2.1",
+    "@deck.gl/core": "^7.0.5",
+    "@deck.gl/google-maps": "^7.0.5",
+    "@deck.gl/layers": "^7.0.5",
+    "@types/gapi": "^0.0.36",
+    "@types/gapi.auth2": "^0.0.50",
+    "@types/gapi.client": "^1.0.1",
+    "@types/gapi.client.drive": "^3.0.3",
+    "@types/geojson": "^7946.0.7",
+    "@types/googlemaps": "^3.30.19",
+    "@types/papaparse": "^4.5.9",
+    "papaparse": "^4.6.3",
+    "parcel": "^1.12.3",
+    "prettier": "^1.16.4",
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.2"
+  }
+}

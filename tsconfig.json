@@ -1,0 +1,9 @@
+{
+  "include": ["./src/**/*"],
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["es6", "dom", "scripthost"],
+    "outDir": ".tmp",
+    "strict": true
+  }
+}
