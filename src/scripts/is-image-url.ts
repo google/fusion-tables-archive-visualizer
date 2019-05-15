@@ -2,14 +2,16 @@
  * Return whether this is a URL of an image or not
  */
 export default function(value: string): boolean {
+  const lowercaseValue = value.toLowerCase();
   const startsWithHttp =
-    value.startsWith('http://') || value.startsWith('https://');
+    lowercaseValue.startsWith('http://') ||
+    lowercaseValue.startsWith('https://');
   const isImage =
-    value.endsWith('.jpeg') ||
-    value.endsWith('.jpg') ||
-    value.endsWith('.png') ||
-    value.endsWith('.gif') ||
-    value.endsWith('.webp');
+    lowercaseValue.endsWith('.jpeg') ||
+    lowercaseValue.endsWith('.jpg') ||
+    lowercaseValue.endsWith('.png') ||
+    lowercaseValue.endsWith('.gif') ||
+    lowercaseValue.endsWith('.webp');
 
   return startsWithHttp && isImage;
 }
