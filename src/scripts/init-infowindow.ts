@@ -1,5 +1,6 @@
 import {GoogleMapsOverlay} from '@deck.gl/google-maps';
 import {LAYER_ID} from './config';
+import isImageUrl from './is-image-url';
 
 /**
  * Initialize an infowindow that shows the clicked data
@@ -70,7 +71,21 @@ function openInfowindow(
 function createContent(data: {[key: string]: any}): string {
   return `<table>
     ${Object.keys(data)
-      .map(key => `<tr><td><b>${key}</b></td><td>${data[key]}</td></tr>`)
+      .map(key => {
+        let value = data[key];
+
+        if (isImageUrl(value)) {
+          value = `<a href="${value}" target="_blank" rel="noopener"
+              title="Open full image in a new tab">
+            <img src="${value}" alt="" height="70" />
+          </a>`;
+        }
+
+        return `<tr>
+          <td><b>${key}</b></td>
+          <td>${value}</td>
+        </tr>`;
+      })
       .join('')}
     </table>`;
 }
