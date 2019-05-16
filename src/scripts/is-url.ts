@@ -1,5 +1,5 @@
 /**
- * Return whether this is a URL of an image or not
+ * Return whether this is an URL or not
  */
 export default function(value: string): boolean {
   const lowercaseValue = value.toLowerCase();
