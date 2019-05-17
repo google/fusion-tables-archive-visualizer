@@ -1,5 +1,5 @@
 /**
- * A style of a visualization and it’s parts
+ * A style of a visualization and its parts
  */
 type IMarkerIcon = {
   fillColor: string;

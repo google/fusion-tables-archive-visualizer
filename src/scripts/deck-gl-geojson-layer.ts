@@ -192,12 +192,12 @@ function getWeight(
 
   if (columnName) {
     const value = d.properties && d.properties[columnName];
-    if (value) {
+    if (value || Number(value) === 0) {
       return value;
     }
   }
 
-  if (weight) {
+  if (weight || weight === 0) {
     return weight;
   }
 
