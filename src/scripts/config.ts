@@ -15,3 +15,8 @@ export const INITIAL_VIEW_STATE = {
 };
 
 export const LAYER_ID = 'geojson-layer';
+
+export const MARKER_SIZES = {
+  'large': 250,
+  'small': 100
+};
