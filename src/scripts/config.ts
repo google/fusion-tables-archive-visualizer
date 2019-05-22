@@ -14,9 +14,5 @@ export const INITIAL_VIEW_STATE = {
   pitch: 0
 };
 
-export const LAYER_ID = 'geojson-layer';
-
-export const MARKER_SIZES = {
-  'large': 250,
-  'small': 100
-};
+export const GEOJSON_LAYER_ID = 'geojson-layer';
+export const ICON_LAYER_ID = 'icon-layer';

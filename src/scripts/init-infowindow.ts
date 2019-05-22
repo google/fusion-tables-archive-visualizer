@@ -1,5 +1,5 @@
 import {GoogleMapsOverlay} from '@deck.gl/google-maps';
-import {LAYER_ID} from './config';
+import {GEOJSON_LAYER_ID, ICON_LAYER_ID} from './config';
 import isUrl from './is-url';
 
 /**
@@ -19,7 +19,7 @@ export default function(
       x,
       y,
       radius: 0,
-      layerIds: [LAYER_ID]
+      layerIds: [GEOJSON_LAYER_ID, ICON_LAYER_ID]
     });
     document.body.classList.toggle('cursor-pointer', picked);
   });
@@ -31,7 +31,7 @@ export default function(
       x,
       y,
       radius: 4,
-      layerIds: [LAYER_ID]
+      layerIds: [GEOJSON_LAYER_ID, ICON_LAYER_ID]
     });
 
     if (picked) {

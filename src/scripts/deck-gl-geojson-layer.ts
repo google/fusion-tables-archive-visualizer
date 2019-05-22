@@ -1,5 +1,5 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
-import {LAYER_ID, MARKER_SIZES} from './config';
+import {GEOJSON_LAYER_ID} from './config';
 import {
   IStyle,
   IColorGradient,
@@ -16,7 +16,7 @@ import createGeojsonFromData from './create-geojson-from-data';
  */
 export default function(data: string[][], style?: IStyle): GeoJsonLayer {
   return new GeoJsonLayer({
-    id: LAYER_ID,
+    id: GEOJSON_LAYER_ID,
     data: createGeojsonFromData(data),
     pickable: true,
     stroked: true,
@@ -24,31 +24,7 @@ export default function(data: string[][], style?: IStyle): GeoJsonLayer {
     lineWidthUnits: 'pixels',
     lineWidthMinPixels: 1,
     pointRadiusMinPixels: 3,
-
-    getRadius: (d: GeoJSON.Feature) => {
-      if (!style || !style.marker) {
-        return MARKER_SIZES.small;
-      }
-
-      const {icon, columnName, buckets} = style.marker;
-
-      if (columnName && buckets) {
-        const bucket = getBucket(buckets, d, columnName);
-        return MARKER_SIZES[bucket.icon.size];
-      }
-
-      if (columnName) {
-        const value: 'large' | 'small' =
-          (d.properties && d.properties[columnName]) || 'small';
-        return MARKER_SIZES[value];
-      }
-
-      if (icon) {
-        return MARKER_SIZES[icon.size];
-      }
-
-      return MARKER_SIZES.small;
-    },
+    getRadius: 0,
 
     getFillColor: (d: GeoJSON.Feature) => {
       if (!style) {
@@ -56,26 +32,6 @@ export default function(data: string[][], style?: IStyle): GeoJsonLayer {
       }
 
       const type = getGeojsonType(d);
-
-      if (type === 'marker' && style.marker) {
-        const {icon, columnName, buckets} = style.marker;
-
-        if (columnName && buckets) {
-          const bucket = getBucket(buckets, d, columnName);
-          return hexaToRgba(bucket.icon.fillColor);
-        }
-
-        if (columnName) {
-          const value = d.properties && d.properties[columnName];
-          if (value) {
-            return hexaToRgba(value);
-          }
-        }
-
-        if (icon) {
-          return hexaToRgba(icon.fillColor);
-        }
-      }
 
       if (type === 'polygon' && style.polygon && style.polygon.fill) {
         const color = getColor(d, style.polygon.fill);
@@ -93,10 +49,6 @@ export default function(data: string[][], style?: IStyle): GeoJsonLayer {
       }
 
       const type = getGeojsonType(d);
-
-      if (type === 'marker') {
-        return [102, 102, 102, 255];
-      }
 
       if (type === 'polyline' && style.polyline && style.polyline.strokeColor) {
         const color = getColor(d, style.polyline.strokeColor);
@@ -192,7 +144,7 @@ function getWeight(
 
   if (columnName) {
     const value = d.properties && d.properties[columnName];
-    if (value || Number(value) === 0) {
+    if (value || Number(value) === 0) {
       return value;
     }
   }

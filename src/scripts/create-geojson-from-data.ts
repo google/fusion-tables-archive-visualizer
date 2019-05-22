@@ -27,7 +27,7 @@ export default function createGeojsonFromData(
       row
     );
 
-    if (geoJsonFeature) {
+    if (geoJsonFeature && geoJsonFeature.geometry.type !== 'Point') {
       featureCollection.features.push(geoJsonFeature);
     }
   });
