@@ -1,18 +1,13 @@
 /**
  * A style of a visualization and its parts
  */
-type IMarkerIcon = {
-  fillColor: string;
-  size: 'large' | 'small';
-};
-
 export type IMarkerStyle = {
-  icon?: IMarkerIcon;
+  icon?: string;
   columnName?: string;
   buckets?: {
     min: number;
     max: number;
-    icon: IMarkerIcon;
+    icon: string;
   }[];
 };
 
