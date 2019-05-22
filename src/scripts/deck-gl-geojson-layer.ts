@@ -106,7 +106,7 @@ function getColor(
 ): number[] | null {
   const {color, columnName, buckets, gradient} = colorStyle;
 
-  if (columnName && buckets) {
+  if (columnName && buckets && buckets.length > 0) {
     const bucket = getBucket(buckets, d, columnName);
     return hexaToRgba(bucket.color);
   }
@@ -138,7 +138,7 @@ function getWeight(
 ): number | null {
   const {weight, columnName, buckets} = weightStyle;
 
-  if (columnName && buckets) {
+  if (columnName && buckets && buckets.length > 0) {
     return getBucket(buckets, d, columnName).weight;
   }
 

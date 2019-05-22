@@ -8,7 +8,7 @@ export default function createIconsFromData(data: string[][]): IIcon[] | null {
   const columns = data[0];
   const geometryIndex = columns.indexOf('geometry');
 
-  if (!geometryIndex) {
+  if (geometryIndex === -1) {
     return null;
   }
 

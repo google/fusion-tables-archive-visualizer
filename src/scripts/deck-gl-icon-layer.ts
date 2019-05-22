@@ -19,7 +19,7 @@ export default function(data: string[][], style?: IStyle): IconLayer {
 
       const {icon, columnName, buckets} = style.marker;
 
-      if (columnName && buckets) {
+      if (columnName && buckets && buckets.length > 0) {
         const value = (d.properties && d.properties[columnName]) || 0;
         const bucket =
           buckets.find(
