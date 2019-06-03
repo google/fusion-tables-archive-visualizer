@@ -25,17 +25,24 @@ export default function(
   });
 
   map.addListener('click', event => {
-    const {latLng, pixel} = event;
-    const {x, y} = pixel;
+    let {latLng} = event;
+    const {x, y} = event.pixel;
     const picked = overlay._deck.pickObject({
       x,
       y,
       radius: 4,
       layerIds: [GEOJSON_LAYER_ID, ICON_LAYER_ID]
     });
+    let isMarkerIcon = false;
+
+    if (picked.layer.id === ICON_LAYER_ID) {
+      const [lng, lat] = picked.object.position;
+      latLng = new google.maps.LatLng(lat, lng);
+      isMarkerIcon = true;
+    }
 
     if (picked) {
-      openInfowindow(infowindow, map, picked.object, latLng);
+      openInfowindow(infowindow, map, picked.object, latLng, isMarkerIcon);
     } else {
       infowindow.close();
     }
@@ -54,12 +61,18 @@ function openInfowindow(
   infowindow: google.maps.InfoWindow,
   map: google.maps.Map,
   feature: GeoJSON.Feature,
-  position: google.maps.LatLng
+  position: google.maps.LatLng,
+  isMarkerIcon: boolean
 ) {
   if (!feature || !feature.properties || !map || !position) {
     return;
   }
 
+  const yOffset = isMarkerIcon ? -34 : 0;
+
+  infowindow.setOptions({
+    pixelOffset: new google.maps.Size(0, yOffset);
+  });
   infowindow.setContent(createContent(feature.properties));
   infowindow.setPosition(position);
   infowindow.open(map);
