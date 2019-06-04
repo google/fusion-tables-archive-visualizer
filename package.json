@@ -10,11 +10,14 @@
   "repository": "https://github.com/ubilabs/fusion-tables-archive-visualizer",
   "private": true,
   "scripts": {
-    "start": "parcel --no-hmr --no-autoinstall ./src/index.html",
-    "build": "parcel build ./src/index.html",
+    "clean": "rm dist/*",
+    "start": "yarn run clean && parcel --no-hmr --no-autoinstall ./src/index.html",
+    "build": "yarn run clean && parcel build ./src/index.html",
+    "build:deploy": "yarn run clean && parcel build --public-url /fusion-tables-export.appspot.com/ ./src/index.html",
     "prettier:ci": "prettier --list-different './src/**/*.ts'",
     "prettier:fix": "prettier --write './src/**/*.ts'",
-    "deploy": "yarn run test && yarn run build && echo 'No deployment configured.'",
+    "upload": "gsutil -m cp -r -a public-read dist/* gs://fusion-tables-export.appspot.com/ && gsutil setmeta -h \"Content-Type:text/html\" -h \"Cache-Control:max-age=0, no-transform\" gs://fusion-tables-export.appspot.com/*.html && gsutil setmeta -h \"Content-Type:application/javascript\" -h \"Cache-Control:max-age=31536000, immutable\" gs://fusion-tables-export.appspot.com/*.js",
+    "deploy": "yarn run test && yarn run build:deploy && yarn run upload",
     "test": "yarn run prettier:ci && tslint -p . -e '**/*.json'"
   },
   "prettier": {
