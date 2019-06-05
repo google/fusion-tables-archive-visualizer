@@ -31,6 +31,7 @@
     "@deck.gl/core": "^7.0.5",
     "@deck.gl/google-maps": "^7.0.5",
     "@deck.gl/layers": "^7.0.5",
+    "@turf/bbox": "^6.0.1",
     "@types/gapi": "^0.0.36",
     "@types/gapi.auth2": "^0.0.50",
     "@types/gapi.client": "^1.0.1",

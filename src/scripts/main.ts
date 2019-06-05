@@ -23,6 +23,7 @@ import fetchData from './fetch-data';
 import deckGlGeojsonLayer from './deck-gl-geojson-layer';
 import deckGlIconLayer from './deck-gl-icon-layer';
 import initInfowindow from './init-infowindow';
+import fitMapToDataBounds from './fit-map-to-data-bounds';
 import {IStyle} from './interfaces/style';
 
 (async () => {
@@ -59,4 +60,5 @@ import {IStyle} from './interfaces/style';
 
   overlay.setMap(map);
   initInfowindow(map, overlay);
+  fitMapToDataBounds(map, data);
 })();
