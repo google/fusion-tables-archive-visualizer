@@ -71,7 +71,7 @@ function openInfowindow(
   const yOffset = isMarkerIcon ? -34 : 0;
 
   infowindow.setOptions({
-    pixelOffset: new google.maps.Size(0, yOffset);
+    pixelOffset: new google.maps.Size(0, yOffset)
   });
   infowindow.setContent(createContent(feature.properties));
   infowindow.setPosition(position);
