@@ -17,13 +17,23 @@
 import {GoogleMapsOverlay} from '@deck.gl/google-maps';
 import {GEOJSON_LAYER_ID, ICON_LAYER_ID} from './config';
 import isUrl from './is-url';
+import {IStyle} from './interfaces/style';
+import {getIconName, getIconSizeByName, SMALL_ICON_SIZE} from './icon-helper';
+
+type IMarkerIconSize = 'none' | 'small' | 'large';
+const OFFSET_FROM_MARKER = {
+  none: 0,
+  small: -7,
+  large: -34
+};
 
 /**
  * Initialize an infowindow that shows the clicked data
  */
 export default function(
   map: google.maps.Map,
-  overlay: GoogleMapsOverlay
+  overlay: GoogleMapsOverlay,
+  style?: IStyle
 ): void {
   map.addListener('mousemove', event => {
     if (!overlay._deck || !overlay._deck.layerManager) {
@@ -49,16 +59,17 @@ export default function(
       radius: 4,
       layerIds: [GEOJSON_LAYER_ID, ICON_LAYER_ID]
     });
-    let isMarkerIcon = false;
+    let markerIconSize: IMarkerIconSize = 'none';
 
     if (picked && picked.layer.id === ICON_LAYER_ID) {
       const [lng, lat] = picked.object.position;
       latLng = new google.maps.LatLng(lat, lng);
-      isMarkerIcon = true;
+      const iconSize = getIconSizeByName(getIconName(picked.object, style));
+      markerIconSize = iconSize === SMALL_ICON_SIZE ? 'small' : 'large';
     }
 
     if (picked) {
-      openInfowindow(infowindow, map, picked.object, latLng, isMarkerIcon);
+      openInfowindow(infowindow, map, picked.object, latLng, markerIconSize);
     } else {
       infowindow.close();
     }
@@ -78,13 +89,13 @@ function openInfowindow(
   map: google.maps.Map,
   feature: GeoJSON.Feature,
   position: google.maps.LatLng,
-  isMarkerIcon: boolean
+  markerIconSize: IMarkerIconSize
 ) {
   if (!feature || !feature.properties || !map || !position) {
     return;
   }
 
-  const yOffset = isMarkerIcon ? -34 : 0;
+  const yOffset = OFFSET_FROM_MARKER[markerIconSize];
 
   infowindow.setOptions({
     pixelOffset: new google.maps.Size(0, yOffset)

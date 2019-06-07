@@ -49,16 +49,14 @@ import {IStyle} from './interfaces/style';
     return;
   }
 
-  const geojsonLayer: GeoJsonLayer = deckGlGeojsonLayer(
-    data,
-    params.style as IStyle
-  );
-  const iconLayer: IconLayer = deckGlIconLayer(data, params.style as IStyle);
+  const style = params.style as IStyle;
+  const geojsonLayer: GeoJsonLayer = deckGlGeojsonLayer(data, style);
+  const iconLayer: IconLayer = deckGlIconLayer(data, style);
   const overlay = new GoogleMapsOverlay({
     layers: [geojsonLayer, iconLayer]
   });
 
   overlay.setMap(map);
-  initInfowindow(map, overlay);
+  initInfowindow(map, overlay, style);
   fitMapToDataBounds(map, data);
 })();
