@@ -19,7 +19,7 @@
  */
 export const GOOGLE_MAPS_URL =
   'https://maps.googleapis.com/maps/api/js' +
-  `?key=AIzaSyB19LiAsfzQxXMNcYg7ywMab90mgcuJJeM&libraries=visualization&v=3.34`;
+  `?key=AIzaSyB19LiAsfzQxXMNcYg7ywMab90mgcuJJeM&libraries=visualization`;
 
 export const TILE_SIZE = 256;
 

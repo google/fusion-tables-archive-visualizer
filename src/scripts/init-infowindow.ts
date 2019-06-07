@@ -51,7 +51,7 @@ export default function(
     });
     let isMarkerIcon = false;
 
-    if (picked.layer.id === ICON_LAYER_ID) {
+    if (picked && picked.layer.id === ICON_LAYER_ID) {
       const [lng, lat] = picked.object.position;
       latLng = new google.maps.LatLng(lat, lng);
       isMarkerIcon = true;
