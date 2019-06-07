@@ -15,7 +15,6 @@
  */
 
 import {GOOGLE_MAPS_URL, INITIAL_VIEW_STATE} from './config';
-import basemapStyle from './basemap';
 
 /**
  * Load & Initialize Google Maps API
@@ -30,7 +29,6 @@ export default function(): Promise<google.maps.Map> {
 
   const mapEl = document.getElementById('map');
   const mapOptions: google.maps.MapOptions = {
-    styles: basemapStyle,
     center: {
       lat: INITIAL_VIEW_STATE.latitude,
       lng: INITIAL_VIEW_STATE.longitude
