@@ -10,7 +10,7 @@
   "repository": "https://github.com/ubilabs/fusion-tables-archive-visualizer",
   "private": true,
   "scripts": {
-    "clean": "rm dist/*",
+    "clean": "rm -rf dist/*",
     "start": "yarn run clean && parcel --no-hmr --no-autoinstall ./src/index.html",
     "build": "yarn run clean && parcel build ./src/index.html && npm run prepend:header:js",
     "build:deploy": "yarn run clean && parcel build --public-url /fusion-tables-export.appspot.com/ ./src/index.html && npm run prepend:header:js",
