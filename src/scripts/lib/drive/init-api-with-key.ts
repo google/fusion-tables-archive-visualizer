@@ -14,36 +14,28 @@
  * limitations under the License.
  */
 
-import {GOOGLE_MAPS_URL, INITIAL_VIEW_STATE} from './config';
-
 /**
- * Load & Initialize Google Maps API
+ * Load & Initialize the Google Drive API for the passed in key
  */
-export default function(): Promise<google.maps.Map> {
+export default function(apiKey: string): Promise<void> {
   const script = document.createElement('script');
-  script.id = 'decoder_script';
+  script.id = 'auth_script';
   script.type = 'text/javascript';
-  script.src = GOOGLE_MAPS_URL;
+  script.src = 'https://apis.google.com/js/platform.js';
   const head = document.getElementsByTagName('head')[0];
   head.appendChild(script);
 
-  const mapEl = document.getElementById('map');
-  const mapOptions: google.maps.MapOptions = {
-    center: {
-      lat: INITIAL_VIEW_STATE.latitude,
-      lng: INITIAL_VIEW_STATE.longitude
-    },
-    // Adding 1 to the zoom level get us close to each other
-    zoom: INITIAL_VIEW_STATE.zoom + 1,
-    tilt: INITIAL_VIEW_STATE.pitch,
-    mapTypeControl: false,
-    streetViewControl: false
-  };
-
   return new Promise(resolve => {
     script.onload = () => {
-      const map = new google.maps.Map(mapEl, mapOptions);
-      resolve(map);
+      gapi.load('client', async () => {
+        await gapi.client.init({
+          apiKey,
+          discoveryDocs: [
+            'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
+          ]
+        });
+        resolve();
+      });
     };
   });
 }

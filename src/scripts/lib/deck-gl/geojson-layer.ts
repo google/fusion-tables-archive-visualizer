@@ -15,13 +15,13 @@
  */
 
 import {GeoJsonLayer} from '@deck.gl/layers';
-import {GEOJSON_LAYER_ID} from './config';
+import {GEOJSON_LAYER_ID} from '../../config/config';
 import {
   IStyle,
   IColorGradient,
   IColorStyle,
   IWeightStyle
-} from './interfaces/style';
+} from '../../interfaces/style';
 import getGeojsonType from './get-geojson-type';
 import hexaToRgba from './hexa-to-rgba';
 import createGeojsonFromData from './create-geojson-from-data';

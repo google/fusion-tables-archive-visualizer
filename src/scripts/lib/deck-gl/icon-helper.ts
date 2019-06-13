@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import {IStyle} from './interfaces/style';
-import {IIcon} from './interfaces/icon';
+import {IStyle} from '../../interfaces/style';
+import {IIcon} from '../../interfaces/icon';
 
 const smallBasePath =
   'https://storage.googleapis.com/' + 'fusion-tables-export.appspot.com/icons/';

@@ -15,9 +15,9 @@
  */
 
 import {IconLayer} from '@deck.gl/layers';
-import {ICON_LAYER_ID} from './config';
-import {IStyle} from './interfaces/style';
-import {IIcon} from './interfaces/icon';
+import {ICON_LAYER_ID} from '../../config/config';
+import {IStyle} from '../../interfaces/style';
+import {IIcon} from '../../interfaces/icon';
 import createIconsFromData from './create-icons-from-data';
 import {getIconName, getIconByName, getIconSizeByName} from './icon-helper';
 

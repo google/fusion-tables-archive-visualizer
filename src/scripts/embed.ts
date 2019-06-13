@@ -19,7 +19,7 @@
 import {GeoJsonLayer, IconLayer} from '@deck.gl/layers';
 import {GoogleMapsOverlay} from '@deck.gl/google-maps';
 import initMap from './lib/map/init-google-maps';
-import initApiWithUserAuth from './lib/drive/init-api-with-user-auth';
+import initApiWithKey from './lib/drive/init-api-with-key';
 import getParamsFromHash from './lib/get-params-from-hash';
 import fetchData from './lib/drive/fetch-data';
 import deckGlGeojsonLayer from './lib/deck-gl/geojson-layer';
@@ -30,22 +30,20 @@ import {IStyle} from './interfaces/style';
 
 (async () => {
   const map = await initMap();
-  const $signin = document.getElementById('signin');
-
-  if (!$signin) {
-    return;
-  }
-
-  await initApiWithUserAuth();
-  $signin.style.display = 'none';
 
   const params = getParamsFromHash();
+
+  if (!params.key) {
+    console.error('Missing an API key for the Google Drive API.');
+    return;
+  }
 
   if (!params.file) {
     console.error('Missing a file param containing the Google Drive File ID.');
     return;
   }
 
+  await initApiWithKey(params.key);
   const data = await fetchData(params.file);
 
   if (!data) {

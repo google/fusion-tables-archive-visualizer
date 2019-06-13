@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {IIcon} from './interfaces/icon';
+import {IIcon} from '../../interfaces/icon';
 
 /**
  * Create an array of marker icons from the source data
