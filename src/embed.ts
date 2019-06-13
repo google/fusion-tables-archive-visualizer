@@ -18,40 +18,47 @@
 
 import {GeoJsonLayer, IconLayer} from '@deck.gl/layers';
 import {GoogleMapsOverlay} from '@deck.gl/google-maps';
-import initMap from './lib/map/init-google-maps';
-import initApiWithKey from './lib/drive/init-api-with-key';
-import getParamsFromHash from './lib/get-params-from-hash';
-import fetchData from './lib/drive/fetch-data';
-import deckGlGeojsonLayer from './lib/deck-gl/geojson-layer';
-import deckGlIconLayer from './lib/deck-gl/icon-layer';
-import initInfowindow from './lib/map/init-infowindow';
-import fitMapToDataBounds from './lib/map/fit-to-data-bounds';
-import {IStyle} from './interfaces/style';
+import initMap from './scripts/lib/map/init-google-maps';
+import initApiWithKey from './scripts/lib/drive/init-api-with-key';
+import fetchData from './scripts/lib/drive/fetch-data';
+import deckGlGeojsonLayer from './scripts/lib/deck-gl/geojson-layer';
+import deckGlIconLayer from './scripts/lib/deck-gl/icon-layer';
+import initInfowindow from './scripts/lib/map/init-infowindow';
+import fitMapToDataBounds from './scripts/lib/map/fit-to-data-bounds';
+import {IStyle} from './scripts/interfaces/style';
+import { IFusiontablesArchiveEmbed } from './scripts/interfaces/archive-embed';
 
-(async () => {
-  const map = await initMap();
+// tslint:disable-next-line interface-name
+interface Window {
+  fusiontablesArchiveEmbed?: IFusiontablesArchiveEmbed;
+}
 
-  const params = getParamsFromHash();
+(window as Window).fusiontablesArchiveEmbed = async (
+  containerSelector: string,
+  apiKey: string,
+  fileId: string,
+  style?: IStyle
+) => {
+  const map = await initMap(containerSelector);
 
-  if (!params.key) {
-    console.error('Missing an API key for the Google Drive API.');
+  if (!apiKey) {
+    console.error('Please provide an API key for the Google Drive API.');
     return;
   }
 
-  if (!params.file) {
-    console.error('Missing a file param containing the Google Drive File ID.');
+  if (!fileId) {
+    console.error('Please provide a Google Drive File ID.');
     return;
   }
 
-  await initApiWithKey(params.key);
-  const data = await fetchData(params.file);
+  await initApiWithKey(apiKey);
+  const data = await fetchData(fileId);
 
   if (!data) {
     console.error('Coudn’t get data for that file.');
     return;
   }
 
-  const style = params.style as IStyle;
   const geojsonLayer: GeoJsonLayer = deckGlGeojsonLayer(data, style);
   const iconLayer: IconLayer = deckGlIconLayer(data, style);
   const overlay = new GoogleMapsOverlay({
@@ -61,4 +68,4 @@ import {IStyle} from './interfaces/style';
   overlay.setMap(map);
   initInfowindow(map, overlay, style);
   fitMapToDataBounds(map, data);
-})();
+};

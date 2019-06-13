@@ -11,13 +11,13 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf dist/*",
-    "start": "npm run clean && parcel --no-hmr --no-autoinstall ./src/*.html",
-    "build": "npm run clean && parcel build ./src/*.html && npm run prepend:header:js",
-    "build:deploy": "npm run clean && parcel build --public-url /fusion-tables-export.appspot.com/ ./src/*.html && npm run prepend:header:js",
+    "start": "npm run clean && parcel --no-hmr --no-autoinstall ./src/index.html ./src/embed.ts",
+    "build": "npm run clean && parcel build ./src/index.html ./src/embed.ts && npm run prepend:header:js",
+    "build:deploy": "npm run clean && parcel build --public-url /fusion-tables-export.appspot.com/ ./src/index.html ./src/embed.ts && npm run prepend:header:js",
     "prepend:header:js": "for file in dist/*.js; do cat src/license-header.txt $file > /tmp/out && mv /tmp/out $file; done",
     "prettier:ci": "prettier --list-different './src/**/*.ts'",
     "prettier:fix": "prettier --write './src/**/*.ts'",
-    "upload": "gsutil -m cp -r -a public-read dist/* gs://fusion-tables-export.appspot.com/ && gsutil setmeta -h \"Content-Type:text/html\" -h \"Cache-Control:max-age=0, no-transform\" gs://fusion-tables-export.appspot.com/*.html && gsutil setmeta -h \"Content-Type:application/javascript\" -h \"Cache-Control:max-age=31536000, immutable\" gs://fusion-tables-export.appspot.com/*.js && gsutil setmeta -h \"X-FRAME-OPTIONS:DENY\" gs://fusion-tables-export.appspot.com/index.js",
+    "upload": "gsutil -m cp -r -a public-read dist/* gs://fusion-tables-export.appspot.com/ && gsutil setmeta -h \"Content-Type:text/html\" -h \"Cache-Control:max-age=0, no-transform\" gs://fusion-tables-export.appspot.com/*.html && gsutil setmeta -h \"Content-Type:application/javascript\" -h \"Cache-Control:max-age=31536000, immutable\" gs://fusion-tables-export.appspot.com/main.*.js && gsutil setmeta -h \"Content-Type:application/javascript\" -h \"Cache-Control:max-age=3600\" gs://fusion-tables-export.appspot.com/embed.js && gsutil setmeta -h \"X-FRAME-OPTIONS:DENY\" gs://fusion-tables-export.appspot.com/index.html",
     "deploy": "npm run test && npm run build:deploy && npm run upload",
     "test": "npm run prettier:ci && tslint -p . -e '**/*.json'"
   },

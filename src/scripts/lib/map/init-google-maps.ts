@@ -19,7 +19,9 @@ import {GOOGLE_MAPS_URL, INITIAL_VIEW_STATE} from '../../config/config';
 /**
  * Load & Initialize Google Maps API
  */
-export default function(): Promise<google.maps.Map> {
+export default function(
+  containerSelector: string = '#map'
+): Promise<google.maps.Map> {
   const script = document.createElement('script');
   script.id = 'decoder_script';
   script.type = 'text/javascript';
@@ -27,7 +29,7 @@ export default function(): Promise<google.maps.Map> {
   const head = document.getElementsByTagName('head')[0];
   head.appendChild(script);
 
-  const mapEl = document.getElementById('map');
+  const mapEl = document.querySelector(containerSelector);
   const mapOptions: google.maps.MapOptions = {
     center: {
       lat: INITIAL_VIEW_STATE.latitude,
