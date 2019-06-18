@@ -18,7 +18,11 @@ import {GoogleMapsOverlay} from '@deck.gl/google-maps';
 import {GEOJSON_LAYER_ID, ICON_LAYER_ID} from '../../config/config';
 import isUrl from './is-url';
 import {IStyle} from '../../interfaces/style';
-import {getIconName, getIconSizeByName, SMALL_ICON_SIZE} from '../deck-gl/icon-helper';
+import {
+  getIconName,
+  getIconSizeByName,
+  SMALL_ICON_SIZE
+} from '../deck-gl/icon-helper';
 
 type IMarkerIconSize = 'none' | 'small' | 'large';
 const OFFSET_FROM_MARKER = {

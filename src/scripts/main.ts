@@ -26,6 +26,7 @@ import deckGlGeojsonLayer from './lib/deck-gl/geojson-layer';
 import deckGlIconLayer from './lib/deck-gl/icon-layer';
 import initInfowindow from './lib/map/init-infowindow';
 import fitMapToDataBounds from './lib/map/fit-to-data-bounds';
+import EmbedOverlay from './lib/embed-overlay';
 import {IStyle} from './interfaces/style';
 
 (async () => {
@@ -58,6 +59,9 @@ import {IStyle} from './interfaces/style';
   const iconLayer: IconLayer = deckGlIconLayer(data, style);
   const overlay = new GoogleMapsOverlay({
     layers: [geojsonLayer, iconLayer]
+  });
+  const embedOverlay = new EmbedOverlay(map, () => {
+    embedOverlay.open(params.file, style);
   });
 
   overlay.setMap(map);

@@ -30,20 +30,24 @@ export default function(
   head.appendChild(script);
 
   const mapEl = document.querySelector(containerSelector);
-  const mapOptions: google.maps.MapOptions = {
-    center: {
-      lat: INITIAL_VIEW_STATE.latitude,
-      lng: INITIAL_VIEW_STATE.longitude
-    },
-    // Adding 1 to the zoom level get us close to each other
-    zoom: INITIAL_VIEW_STATE.zoom + 1,
-    tilt: INITIAL_VIEW_STATE.pitch,
-    mapTypeControl: false,
-    streetViewControl: false
-  };
 
   return new Promise(resolve => {
     script.onload = () => {
+      const mapOptions: google.maps.MapOptions = {
+        center: {
+          lat: INITIAL_VIEW_STATE.latitude,
+          lng: INITIAL_VIEW_STATE.longitude
+        },
+        // Adding 1 to the zoom level get us close to each other
+        zoom: INITIAL_VIEW_STATE.zoom + 1,
+        tilt: INITIAL_VIEW_STATE.pitch,
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControlOptions: {
+          position: google.maps.ControlPosition.TOP_RIGHT
+        }
+      };
+
       const map = new google.maps.Map(mapEl, mapOptions);
       resolve(map);
     };

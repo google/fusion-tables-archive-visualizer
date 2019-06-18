@@ -6,18 +6,51 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="google-signin-client_id" content="809120419913-k06v124d3i6qsrmslc3b9o7arg9spob5.apps.googleusercontent.com">
   <title>Fusion Tables Export Visualizer</title>
-  <style>
-    html, body {height: 100%; margin: 0}
-    #map {width: 100%; height: 100%}
-    #signin {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);}
-    body.cursor-pointer .gm-style > div {
-      cursor: pointer !important;
-    }
-  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500">
+  <link rel="stylesheet" href="./styles/main.css">
 </head>
 <body>
   <div id="map"></div>
   <div id="signin"></div>
+  <div style="display: none">
+    <button type="button" class="button" id="embed">Embed</button>
+  </div>
+  <section id="embed-overlay" class="embed-overlay embed-overlay--hidden">
+    <div class="embed-overlay__background"></div>
+    <form class="embed-overlay__content">
+      <header class="embed-overlay__content__row">
+        <h2>Publish</h2>
+      </header>
+
+      <div class="embed-overlay__content__row">
+        <span class="input">
+          <input class="input__field" type="text" id="embed-api-key" placeholder="Enter your API key">
+          <label class="input__label" for="embed-api-key">API key
+        </span>
+        <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" title="Get an API Key for the Google Maps Javascript API" target="_blank" rel="noopener">
+          Help
+        </a>
+      </div>
+
+      <div class="embed-overlay__content__row">
+        <small>
+          Generate an API key for Google Maps and Drive API and enter it above. Place the complete snippet into your website code to display the visualization on your website.
+        </small>
+      </div>
+
+      <hr>
+
+      <div class="embed-overlay__content__row">
+        <span class="input">
+          <textarea class="input__field input__field--textarea" id="embed-snippet" readonly></textarea>
+          <label class="input__label" for="embed-snippet">HTML
+        </span>
+        <button type="button" class="button" id="copy-button">
+          Copy
+        </button>
+      </div>
+    </form>
+  </section>
   <script src="./scripts/main.ts"></script>
 </body>
 </html>

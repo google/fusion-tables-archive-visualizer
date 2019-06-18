@@ -1,0 +1,159 @@
+/*!
+ * Copyright 2019 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import {IStyle} from '../interfaces/style';
+
+/**
+ * The embed overlay
+ */
+export default class {
+  private $embedButton: HTMLButtonElement;
+  private $background: HTMLDivElement;
+  private $overlay: HTMLElement;
+  private $copy: HTMLButtonElement;
+  private $apiKey: HTMLInputElement;
+  private $snippet: HTMLTextAreaElement;
+  private isInitialized: boolean = false;
+  private fileId?: string;
+  private style?: IStyle;
+
+  constructor(map: google.maps.Map, onClick: () => void) {
+    this.$embedButton = document.querySelector('#embed') as HTMLButtonElement;
+    this.$background = document.querySelector(
+      '.embed-overlay__background'
+    ) as HTMLDivElement;
+    this.$overlay = document.querySelector('#embed-overlay') as HTMLElement;
+    this.$apiKey = document.querySelector('#embed-api-key') as HTMLInputElement;
+    this.$copy = document.querySelector('#copy-button') as HTMLButtonElement;
+    this.$snippet = document.querySelector(
+      '#embed-snippet'
+    ) as HTMLTextAreaElement;
+
+    this.$embedButton.addEventListener('click', () => {
+      this.$embedButton.setAttribute('disabled', 'disabled');
+      onClick();
+    });
+
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(this.$embedButton);
+
+    this.updateSnippet = this.updateSnippet.bind(this);
+    this.copySnippet = this.copySnippet.bind(this);
+    this.close = this.close.bind(this);
+  }
+
+  /**
+   * Open the embed overlay
+   */
+  public open(fileId: string, style?: IStyle): void {
+    if (!this.$overlay || !this.$snippet || !this.$apiKey) {
+      return;
+    }
+
+    if (!this.isInitialized) {
+      this.initialize();
+    }
+
+    this.fileId = fileId;
+    this.style = style;
+
+    this.$overlay.classList.remove('embed-overlay--hidden');
+    this.updateSnippet();
+  }
+
+  /**
+   * Update the snippet to copy
+   */
+  private updateSnippet() {
+    if (!this.fileId) {
+      return;
+    }
+
+    const apiKey = this.$apiKey.value || 'YOUR_API_KEY';
+    this.$snippet.value = generateSnippet({
+      apiKey,
+      fileId: this.fileId,
+      style: this.style
+    });
+  }
+
+  /**
+   * Initialize the listener
+   */
+  private initialize() {
+    this.$apiKey.addEventListener('input', this.updateSnippet);
+    this.$background.addEventListener('click', this.close);
+    this.$copy.addEventListener('click', this.copySnippet);
+    this.isInitialized = true;
+  }
+
+  /**
+   * Close the overlay
+   */
+  private close() {
+    this.$embedButton.removeAttribute('disabled');
+    this.$overlay.classList.add('embed-overlay--hidden');
+  }
+
+  /**
+   * Copies the snippet to the users clipboard.
+   */
+  private copySnippet(event: MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.$snippet.focus();
+    this.$snippet.select();
+
+    document.execCommand('copy');
+  }
+}
+
+/**
+ * Generate the snippet code
+ */
+interface IGenerateSnippetParams {
+  apiKey: string;
+  fileId: string;
+  style?: IStyle;
+}
+function generateSnippet(params: IGenerateSnippetParams): string {
+  const quoteRegex = /"/g;
+  const keyRegex = /'(\w+)':/gi;
+  const style =
+    params.style &&
+    JSON.stringify(params.style)
+      .replace(quoteRegex, "'") // tslint:disable-line quotemark
+      .replace(keyRegex, '$1:');
+
+  return `<div id="fustiontable-map"></div>
+<script src="https://storage.googleapis.com/fusion-tables-export.appspot.com/embed.js"></script>
+<style>
+  #fustiontable-map {width: 100%; height: 100%}
+  body.cursor-pointer .gm-style > div {cursor: pointer !important;}
+</style>
+<script>
+  const containerSelector = '#fustiontable-map';
+  const apiKey = '${params.apiKey}';
+  const fileId = '${params.fileId}';
+  ${style && `const style = ${style};`}
+
+  ${
+    style
+      ? `fusiontablesArchiveEmbed(containerSelector, apiKey, fileId, style);`
+      : `fusiontablesArchiveEmbed(containerSelector, apiKey, fileId);`
+  }
+</script>`;
+}

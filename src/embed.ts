@@ -26,7 +26,7 @@ import deckGlIconLayer from './scripts/lib/deck-gl/icon-layer';
 import initInfowindow from './scripts/lib/map/init-infowindow';
 import fitMapToDataBounds from './scripts/lib/map/fit-to-data-bounds';
 import {IStyle} from './scripts/interfaces/style';
-import { IFusiontablesArchiveEmbed } from './scripts/interfaces/archive-embed';
+import {IFusiontablesArchiveEmbed} from './scripts/interfaces/archive-embed';
 
 // tslint:disable-next-line interface-name
 interface Window {
