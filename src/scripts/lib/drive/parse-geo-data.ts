@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 
-const latLngPairs: Array<[string, string]> = [
-  ['Latitude', 'Longitude'],
-  ['latitude', 'longitude'],
-  ['Lat', 'Lng'],
-  ['Lat', 'Lon'],
-  ['Lat', 'Long'],
-  ['lat', 'lng'],
-  ['lat', 'lon'],
-  ['lat', 'long']
-];
-
 /**
  * Parse the data for geometries or point data
  */
@@ -35,13 +24,14 @@ export default function(data: string[][]): string[][] {
     return data;
   }
 
-  const latLngPair = latLngPairs.find(
-    pair => columnNames.includes(pair[0]) && columnNames.includes(pair[1])
-  );
+  const latColumn = getColumnStartingWith(columnNames, 'lat');
+  const lngColumn =
+    getColumnStartingWith(columnNames, 'lng') ||
+    getColumnStartingWith(columnNames, 'lon');
 
-  if (latLngPair) {
-    const latIndex = columnNames.indexOf(latLngPair[0]);
-    const lngIndex = columnNames.indexOf(latLngPair[1]);
+  if (latColumn && lngColumn) {
+    const latIndex = columnNames.indexOf(latColumn);
+    const lngIndex = columnNames.indexOf(lngColumn);
 
     return data.map((row, index) => {
       if (index === 0) {
@@ -55,6 +45,18 @@ export default function(data: string[][]): string[][] {
   }
 
   return data;
+}
+
+/**
+ * Get the column name of the column starting with the passed string
+ */
+function getColumnStartingWith(
+  columnNames: string[],
+  start: string
+): string | undefined {
+  return columnNames.find(
+    columnName => columnName.toLowerCase().indexOf(start) === 0
+  );
 }
 
 /**
