@@ -15,6 +15,13 @@
  */
 
 import {IStyle} from '../interfaces/style';
+import {highlightBlock, registerLanguage} from 'highlight.js/lib/highlight';
+import javascript from 'highlight.js/lib/languages/javascript';
+import xml from 'highlight.js/lib/languages/xml';
+import 'highlight.js/styles/docco.css';
+
+registerLanguage('javascript', javascript);
+registerLanguage('xml', xml);
 
 /**
  * The embed overlay
@@ -23,9 +30,11 @@ export default class {
   private $embedButton: HTMLButtonElement;
   private $background: HTMLDivElement;
   private $overlay: HTMLElement;
+  private $close: HTMLButtonElement;
   private $copy: HTMLButtonElement;
   private $apiKey: HTMLInputElement;
-  private $snippet: HTMLTextAreaElement;
+  private $snippet: HTMLElement;
+  private $snippetCopyArea: HTMLTextAreaElement;
   private isInitialized: boolean = false;
   private fileId?: string;
   private style?: IStyle;
@@ -35,11 +44,17 @@ export default class {
     this.$background = document.querySelector(
       '.embed-overlay__background'
     ) as HTMLDivElement;
+    this.$close = document.querySelector(
+      '.embed-overlay__content__close'
+    ) as HTMLButtonElement;
     this.$overlay = document.querySelector('#embed-overlay') as HTMLElement;
     this.$apiKey = document.querySelector('#embed-api-key') as HTMLInputElement;
     this.$copy = document.querySelector('#copy-button') as HTMLButtonElement;
     this.$snippet = document.querySelector(
       '#embed-snippet'
+    ) as HTMLTextAreaElement;
+    this.$snippetCopyArea = document.querySelector(
+      '#embed-snippet-copy-area'
     ) as HTMLTextAreaElement;
 
     this.$embedButton.addEventListener('click', () => {
@@ -82,11 +97,14 @@ export default class {
     }
 
     const apiKey = this.$apiKey.value || 'YOUR_API_KEY';
-    this.$snippet.value = generateSnippet({
+    const snippet = generateSnippet({
       apiKey,
       fileId: this.fileId,
       style: this.style
     });
+    this.$snippet.innerText = snippet;
+    this.$snippetCopyArea.value = snippet;
+    highlightBlock(this.$snippet);
   }
 
   /**
@@ -95,6 +113,7 @@ export default class {
   private initialize() {
     this.$apiKey.addEventListener('input', this.updateSnippet);
     this.$background.addEventListener('click', this.close);
+    this.$close.addEventListener('click', this.close);
     this.$copy.addEventListener('click', this.copySnippet);
     this.isInitialized = true;
   }
@@ -114,8 +133,8 @@ export default class {
     event.preventDefault();
     event.stopPropagation();
 
-    this.$snippet.focus();
-    this.$snippet.select();
+    this.$snippetCopyArea.focus();
+    this.$snippetCopyArea.select();
 
     document.execCommand('copy');
   }
@@ -145,15 +164,14 @@ function generateSnippet(params: IGenerateSnippetParams): string {
   body.cursor-pointer .gm-style > div {cursor: pointer !important;}
 </style>
 <script>
-  const containerSelector = '#fustiontable-map';
-  const apiKey = '${params.apiKey}';
-  const fileId = '${params.fileId}';
-  ${style && `const style = ${style};`}
-
+  var containerSelector = '#fustiontable-map';
+  var apiKey = '${params.apiKey}';
+  var fileId = '${params.fileId}';
+  ${style ? `var style = ${style};\n` : ''}
   ${
     style
-      ? `fusiontablesArchiveEmbed(containerSelector, apiKey, fileId, style);`
-      : `fusiontablesArchiveEmbed(containerSelector, apiKey, fileId);`
+      ? 'fusiontablesArchiveEmbed(containerSelector, apiKey, fileId, style);'
+      : 'fusiontablesArchiveEmbed(containerSelector, apiKey, fileId);'
   }
 </script>`;
 }

@@ -7,7 +7,6 @@
   <meta name="google-signin-client_id" content="809120419913-k06v124d3i6qsrmslc3b9o7arg9spob5.apps.googleusercontent.com">
   <title>Fusion Tables Export Visualizer</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500">
-  <link rel="stylesheet" href="./styles/main.css">
 </head>
 <body>
   <div id="map"></div>
@@ -21,6 +20,14 @@
       <header class="embed-overlay__content__row">
         <h2>Publish</h2>
       </header>
+
+      <button type="button" class="embed-overlay__content__close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <title>Close the embed overlay</title>
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+        </svg>
+      </button>
 
       <div class="embed-overlay__content__row">
         <span class="input">
@@ -42,8 +49,9 @@
 
       <div class="embed-overlay__content__row">
         <span class="input">
-          <textarea class="input__field input__field--textarea" id="embed-snippet" readonly></textarea>
-          <label class="input__label" for="embed-snippet">HTML
+          <pre class="input__field input__field--code"><code id="embed-snippet" class="html javascript"></code></pre>
+          <textarea style="pointer-events: none; opacity: 0; position: absolute; left: -9999em;" id="embed-snippet-copy-area"></textarea>
+          <label class="input__label">HTML
         </span>
         <button type="button" class="button" id="copy-button">
           Copy

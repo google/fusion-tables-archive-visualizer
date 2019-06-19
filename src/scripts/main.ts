@@ -29,6 +29,8 @@ import fitMapToDataBounds from './lib/map/fit-to-data-bounds';
 import EmbedOverlay from './lib/embed-overlay';
 import {IStyle} from './interfaces/style';
 
+import '../styles/main.css';
+
 (async () => {
   const map = await initMap();
   const $signin = document.getElementById('signin');

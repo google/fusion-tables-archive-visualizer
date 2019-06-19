@@ -139,6 +139,7 @@ h2 {
 
 .embed-overlay__content {
   font-size: 1rem;
+  position: relative;
   width: 95vw;
   max-width: 50em;
   border-radius: 4px;
@@ -147,6 +148,23 @@ h2 {
   -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.2);
   box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.2);
   z-index: 1;
+}
+
+.embed-overlay__content__close {
+  border: 0;
+  background: transparent;
+  padding: .5em;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color .2s linear;
+}
+
+.embed-overlay__content__close:focus, .embed-overlay__content__close:hover {
+  background-color: #f5f5f5;
 }
 
 .embed-overlay__content__row {
@@ -177,11 +195,21 @@ h2 {
   border-radius: 4px;
 }
 
-.input__field--textarea {
+.input__field--code {
   font-family: monospace;
-  min-height: 10em;
+  height: auto;
+  max-height: calc(100vh - 20rem);
   line-height: 1.2em;
   resize: none;
+  margin: 0;
+  overflow: auto;
+  padding: 0;
+}
+
+.input__field--code code {
+  white-space: pre-wrap;
+  padding: 1em;
+  background: #fff;
 }
 
 .input__label {
