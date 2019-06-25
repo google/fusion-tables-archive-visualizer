@@ -1,0 +1,41 @@
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+runtime: nodejs10
+service: geoviz
+
+handlers:
+- url: /
+  static_files: dist/index.html
+  upload: dist/index.html
+  http_headers:
+    Cache-Control: max-age=0, no-transform
+    X-FRAME-OPTIONS: DENY
+
+- url: /embed.js
+  static_files: dist/embed.js
+  upload: dist/embed.js
+  http_headers:
+    Cache-Control: max-age=3600
+
+- url: /main.(.*)
+  static_files: dist/main.\1
+  upload: dist/main.(.*)
+  http_headers:
+    Cache-Control: max-age=31536000, immutable
+
+- url: /.*
+  script: auto
+  secure: always
+  redirect_http_response_code: 301
