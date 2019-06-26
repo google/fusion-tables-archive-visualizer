@@ -160,6 +160,7 @@ h2 {
   right: 0;
   border-radius: 4px;
   cursor: pointer;
+  -webkit-transition: background-color .2s linear;
   transition: background-color .2s linear;
 }
 
@@ -224,4 +225,83 @@ h2 {
   position: absolute;
   top: -.6em;
   left: .75rem;
+}
+
+/**
+ * SPINNER
+ */
+.spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #1a73e8;
+  -webkit-animation: spinnerrotate 2s linear infinite;
+  animation: spinnerrotate 2s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.spinner--hidden {
+  display: none;
+}
+
+.spinner circle {
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  -webkit-animation: spinnerdash 1.5s ease-in-out infinite;
+  animation: spinnerdash 1.5s ease-in-out infinite;
+}
+
+@-webkit-keyframes spinnerrotate {
+  from {
+    -webkit-transform: translate(-50%, -50%) rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    -webkit-transform: translate(-50%, -50%) rotate(360deg);
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes spinnerrotate {
+  from {
+    -webkit-transform: translate(-50%, -50%) rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    -webkit-transform: translate(-50%, -50%) rotate(360deg);
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spinnerdash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
+}
+
+@keyframes spinnerdash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
 }

@@ -51,6 +51,9 @@ import '../styles/main.css';
 
   const data = await fetchData(params.file);
 
+  const $spinner = document.querySelector('.spinner') as SVGElement;
+  $spinner.classList.add('spinner--hidden');
+
   if (!data) {
     console.error('Coudn’t get data for that file.');
     return;
