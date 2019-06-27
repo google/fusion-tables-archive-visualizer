@@ -23,6 +23,13 @@ handlers:
     Cache-Control: max-age=0, no-transform
     X-FRAME-OPTIONS: DENY
 
+- url: /icons/(.*).png
+  static_files: icons/\1.png
+  upload: icons/(.*).png
+  http_headers:
+    Cache-Control: max-age=31536000, immutable
+    Access-Control-Allow-Origin: '*'
+
 - url: /embed.js
   static_files: dist/embed.js
   upload: dist/embed.js
