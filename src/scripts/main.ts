@@ -27,6 +27,7 @@ import deckGlIconLayer from './lib/deck-gl/icon-layer';
 import initInfowindow from './lib/map/init-infowindow';
 import fitMapToDataBounds from './lib/map/fit-to-data-bounds';
 import EmbedOverlay from './lib/embed-overlay';
+import {showIsLargeWarning, finishLoading} from './lib/loading';
 import {IStyle} from './interfaces/style';
 
 import '../styles/main.css';
@@ -49,10 +50,13 @@ import '../styles/main.css';
     return;
   }
 
+  if (params.large) {
+    showIsLargeWarning();
+  }
+
   const data = await fetchData(params.file);
 
-  const $spinner = document.querySelector('.spinner') as SVGElement;
-  $spinner.classList.add('spinner--hidden');
+  finishLoading();
 
   if (!data) {
     console.error('Coudn’t get data for that file.');

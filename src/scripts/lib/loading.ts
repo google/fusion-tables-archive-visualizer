@@ -14,28 +14,22 @@
  * limitations under the License.
  */
 
+const $isLargeWarning = document.querySelector(
+  '.is-large-warning'
+) as HTMLDivElement;
+const $spinner = document.querySelector('.spinner') as SVGElement;
+
 /**
- * Get the GET-like params from the hash
+ * Show the warning
  */
-export default function(): {[key: string]: string} {
-  const params: {[key: string]: string} = {};
-  const hash = document.location.hash.substring(1);
-  const pairs = hash.split('&');
-  pairs.forEach(keyValue => {
-    const firstEqual = keyValue.indexOf('=');
-    const key = keyValue.substring(0, firstEqual);
-    let value = keyValue.substring(firstEqual + 1);
+export function showIsLargeWarning() {
+  $isLargeWarning.classList.remove('is-large-warning--hidden');
+}
 
-    if (key === 'style') {
-      value = JSON.parse(atob(value));
-    }
-
-    if (key === 'large') {
-      value = JSON.parse(value);
-    }
-
-    params[key] = value;
-  });
-
-  return params;
+/**
+ * Finish loading
+ */
+export function finishLoading() {
+  $spinner.classList.add('spinner--hidden');
+  $isLargeWarning.classList.add('is-large-warning--hidden');
 }

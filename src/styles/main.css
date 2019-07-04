@@ -305,3 +305,24 @@ h2 {
     stroke-dashoffset: -124;
   }
 }
+
+.is-large-warning {
+  font-size: 1rem;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  padding: 1em;
+  text-align: center;
+  width: 90%;
+  max-width: 25em;
+  border-radius: 0 0 4px 4px;
+  background: #fff;
+  -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.2);
+}
+
+.is-large-warning--hidden {
+  display: none;
+}
