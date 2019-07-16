@@ -43,7 +43,12 @@ export default function createGeojsonFromData(
       row
     );
 
-    if (geoJsonFeature && geoJsonFeature.geometry.type !== 'Point') {
+    if (
+      geoJsonFeature &&
+      geoJsonFeature.geometry.type !== 'Point' &&
+      geoJsonFeature.geometry.coordinates &&
+      geoJsonFeature.geometry.coordinates.length
+    ) {
       featureCollection.features.push(geoJsonFeature);
     }
   });

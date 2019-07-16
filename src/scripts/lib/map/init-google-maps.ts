@@ -40,6 +40,7 @@ export default function(
         },
         // Adding 1 to the zoom level get us close to each other
         zoom: INITIAL_VIEW_STATE.zoom + 1,
+        minZoom: 2,
         tilt: INITIAL_VIEW_STATE.pitch,
         mapTypeControl: false,
         streetViewControl: false,
