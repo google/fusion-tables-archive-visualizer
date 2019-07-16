@@ -18,7 +18,7 @@ import {IStyle} from '../../interfaces/style';
 import {IIcon} from '../../interfaces/icon';
 
 const getGeovizUrl = (filename: string): string =>
-  `https://geoviz-dot-fusion-tables-export.appspot.com/icons/${filename}.png`;
+  `https://fusion-tables-export.appspot.com/geoviz/icons/${filename}.png`;
 const getShapesUrl = (filename: string): string =>
   `https://maps.gstatic.com/mapfiles/kml/shapes/${filename}.png`;
 const getPaddleUrl = (filename: string): string =>

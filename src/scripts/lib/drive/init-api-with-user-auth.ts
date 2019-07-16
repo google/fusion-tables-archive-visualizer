@@ -25,6 +25,11 @@ export default function(): Promise<void> {
   const head = document.getElementsByTagName('head')[0];
   head.appendChild(script);
 
+  const meta = document.createElement('meta');
+  meta.setAttribute('name', 'google-signin-client_id');
+  meta.setAttribute('content', process.env.GOOGLE_SIGNIN_CLIENT_ID || '');
+  head.appendChild(meta);
+
   return new Promise(resolve => {
     script.onload = () => {
       gapi.signin2.render('signin', {

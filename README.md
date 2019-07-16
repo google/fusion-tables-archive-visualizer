@@ -39,6 +39,12 @@ Setup the gcloud to your project ID like this:
 gcloud config set project my-project-id
 ```
 
+Create an OAuth token for the client authentication in your [Google Cloud Project](https://console.cloud.google.com/apis/credentials). Set the client ID to the `GOOGLE_SIGNIN_CLIENT_ID` environment variable like this:
+
+```sh
+export GOOGLE_SIGNIN_CLIENT_ID="XXXXXXXXXXX.apps.googleusercontent.com"
+```
+
 Set your Google Maps API key in an environment variable called `GOOGLE_MAPS_API_KEY` like this:
 
 ```sh
