@@ -158,7 +158,7 @@ function generateSnippet(params: IGenerateSnippetParams): string {
       .replace(keyRegex, '$1:');
 
   return `<div id="fustiontable-map"></div>
-<script src="https://storage.googleapis.com/fusion-tables-export.appspot.com/embed.js"></script>
+<script src="${document.location}/embed.js"></script>
 <style>
   #fustiontable-map {width: 100%; height: 100%}
   body.cursor-pointer .gm-style > div {cursor: pointer !important;}

@@ -17,7 +17,7 @@
     "prepend:header:js": "for file in dist/*.js; do cat src/license-header.txt $file > /tmp/out && mv /tmp/out $file; done",
     "prettier:ci": "prettier --list-different './src/**/*.ts'",
     "prettier:fix": "prettier --write './src/**/*.ts'",
-    "deploy": "npm run test && npm run build && gcloud app deploy --project fusion-tables-export",
+    "deploy": "npm run test && npm run build:deploy && gcloud app deploy --project fusion-tables-export",
     "test": "npm run prettier:ci && tslint -p . -e '**/*.json'"
   },
   "prettier": {

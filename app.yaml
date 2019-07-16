@@ -16,33 +16,33 @@ runtime: nodejs10
 service: geoviz
 
 handlers:
-- url: /
+- url: /geoviz
   static_files: dist/index.html
   upload: dist/index.html
   http_headers:
     Cache-Control: max-age=0, no-transform
     X-FRAME-OPTIONS: DENY
 
-- url: /icons/(.*).png
+- url: /geoviz/icons/(.*).png
   static_files: icons/\1.png
   upload: icons/(.*).png
   http_headers:
     Cache-Control: max-age=31536000, immutable
     Access-Control-Allow-Origin: '*'
 
-- url: /embed.js
+- url: /geoviz/embed.js
   static_files: dist/embed.js
   upload: dist/embed.js
   http_headers:
     Cache-Control: max-age=3600
 
-- url: /main.(.*)
+- url: /geoviz/main.(.*)
   static_files: dist/main.\1
   upload: dist/main.(.*)
   http_headers:
     Cache-Control: max-age=31536000, immutable
 
-- url: /.*
+- url: /geoviz/.*
   script: auto
   secure: always
   redirect_http_response_code: 301
