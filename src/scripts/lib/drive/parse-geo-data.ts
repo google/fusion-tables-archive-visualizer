@@ -44,7 +44,9 @@ export default function(data: string[][]): string[][] {
     });
   }
 
-  const anyGeometryColumn = columnNames.find(column => column.indexOf('geometry') !== -1);
+  const anyGeometryColumn = columnNames.find(
+    column => column.indexOf('geometry') !== -1
+  );
 
   if (anyGeometryColumn) {
     const anyGeometryIndex = columnNames.indexOf(anyGeometryColumn);
