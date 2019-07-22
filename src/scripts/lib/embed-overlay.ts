@@ -151,6 +151,7 @@ interface IGenerateSnippetParams {
 function generateSnippet(params: IGenerateSnippetParams): string {
   const quoteRegex = /"/g;
   const keyRegex = /'(\w+)':/gi;
+  const {origin, pathname} = document.location;
   const style =
     params.style &&
     JSON.stringify(params.style)
@@ -158,7 +159,7 @@ function generateSnippet(params: IGenerateSnippetParams): string {
       .replace(keyRegex, '$1:');
 
   return `<div id="fustiontable-map"></div>
-<script src="${document.location}/embed.js"></script>
+<script src="${origin}${pathname}/embed.js"></script>
 <style>
   #fustiontable-map {width: 100%; height: 100%}
   body.cursor-pointer .gm-style > div {cursor: pointer !important;}
