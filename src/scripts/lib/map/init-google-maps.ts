@@ -43,6 +43,7 @@ export default function(
         zoom: INITIAL_VIEW_STATE.zoom + 1,
         minZoom: 2,
         tilt: INITIAL_VIEW_STATE.pitch,
+        clickableIcons: false,
         mapTypeControl: false,
         streetViewControl: false,
         fullscreenControlOptions: {
