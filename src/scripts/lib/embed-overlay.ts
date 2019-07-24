@@ -158,14 +158,14 @@ function generateSnippet(params: IGenerateSnippetParams): string {
       .replace(quoteRegex, "'") // tslint:disable-line quotemark
       .replace(keyRegex, '$1:');
 
-  return `<div id="fustiontable-map"></div>
+  return `<div id="fusiontable-map"></div>
 <script src="${origin}${pathname}/embed.js"></script>
 <style>
-  #fustiontable-map {width: 100%; height: 100%}
+  #fusiontable-map {width: 100%; height: 100%}
   body.cursor-pointer .gm-style > div {cursor: pointer !important;}
 </style>
 <script>
-  var containerSelector = '#fustiontable-map';
+  var containerSelector = '#fusiontable-map';
   var apiKey = '${params.apiKey}';
   var fileId = '${params.fileId}';
   ${style ? `var style = ${style};\n` : ''}

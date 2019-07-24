@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-import {GOOGLE_MAPS_URL, INITIAL_VIEW_STATE} from '../../config/config';
+import {getGoogleMapsApiUrl, INITIAL_VIEW_STATE} from '../../config/config';
 
 /**
  * Load & Initialize Google Maps API
  */
 export default function(
+  apiKey: string,
   containerSelector: string = '#map'
 ): Promise<google.maps.Map> {
   const script = document.createElement('script');
   script.id = 'decoder_script';
   script.type = 'text/javascript';
-  script.src = GOOGLE_MAPS_URL;
+  script.src = getGoogleMapsApiUrl(apiKey);
   const head = document.getElementsByTagName('head')[0];
   head.appendChild(script);
 

@@ -17,9 +17,9 @@
 /**
  * Configuration for the visualizer
  */
-export const GOOGLE_MAPS_URL =
+export const getGoogleMapsApiUrl = (apiKey: string) =>
   'https://maps.googleapis.com/maps/api/js' +
-  `?key=${process.env.GOOGLE_MAPS_API_KEY}&libraries=visualization`;
+  `?key=${apiKey}&libraries=visualization`;
 
 export const TILE_SIZE = 256;
 

@@ -39,12 +39,12 @@ interface Window {
   fileId: string,
   style?: IStyle
 ) => {
-  const map = await initMap(containerSelector);
-
   if (!apiKey) {
     console.error('Please provide an API key for the Google Drive API.');
     return;
   }
+
+  const map = await initMap(apiKey, containerSelector);
 
   if (!fileId) {
     console.error('Please provide a Google Drive File ID.');

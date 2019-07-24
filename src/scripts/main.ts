@@ -33,7 +33,7 @@ import {IStyle} from './interfaces/style';
 import '../styles/main.css';
 
 (async () => {
-  const map = await initMap();
+  const map = await initMap(process.env.GOOGLE_MAPS_API_KEY || '');
   const $signin = document.getElementById('signin');
 
   if (!$signin) {
