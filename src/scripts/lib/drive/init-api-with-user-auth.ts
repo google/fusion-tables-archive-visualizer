@@ -33,7 +33,7 @@ export default function(): Promise<void> {
   return new Promise(resolve => {
     script.onload = () => {
       gapi.signin2.render('signin', {
-        scope: 'https://www.googleapis.com/auth/drive.readonly',
+        scope: 'https://www.googleapis.com/auth/drive.file',
         width: 240,
         height: 50,
         longtitle: true,
