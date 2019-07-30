@@ -55,6 +55,23 @@ export default function(data: string[][]): string[][] {
     return data;
   }
 
+  const firstRow = data[1];
+  const geometryContentIndex =
+    firstRow &&
+    firstRow.findIndex(cell => {
+      try {
+        const geoJson = JSON.parse(cell);
+        return geoJson && geoJson.type && geoJson.type === 'Feature';
+      } catch (error) {
+        return false;
+      }
+    });
+
+  if (geometryContentIndex) {
+    data[0][geometryContentIndex] = 'geometry';
+    return data;
+  }
+
   return data;
 }
 
