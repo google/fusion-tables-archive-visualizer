@@ -23,7 +23,6 @@ export default function(apiKey: string): Promise<void> {
   script.type = 'text/javascript';
   script.src = 'https://apis.google.com/js/platform.js';
   const head = document.getElementsByTagName('head')[0];
-  head.appendChild(script);
 
   return new Promise(resolve => {
     script.onload = () => {
@@ -37,5 +36,6 @@ export default function(apiKey: string): Promise<void> {
         resolve();
       });
     };
+    head.appendChild(script);
   });
 }

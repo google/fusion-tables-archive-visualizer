@@ -45,10 +45,10 @@ Create an OAuth token for the client authentication in your [Google Cloud Projec
 export GOOGLE_SIGNIN_CLIENT_ID="XXXXXXXXXXX.apps.googleusercontent.com"
 ```
 
-Set your Google Maps API key in an environment variable called `GOOGLE_MAPS_API_KEY` like this:
+Create a API key for Google Maps and Google Drive. Store that in an environment variable called `API_KEY` like this:
 
 ```sh
-export GOOGLE_MAPS_API_KEY="my-key"
+export API_KEY="my-key"
 ```
 
 To help with environment variable handling on a project level, check out [direnv](https://direnv.net/).

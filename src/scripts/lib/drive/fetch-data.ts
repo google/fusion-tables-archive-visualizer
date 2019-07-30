@@ -20,16 +20,14 @@ import parseGeoData from './parse-geo-data';
 /**
  * Fetch a CSV and return it as JSON
  */
-export default async function(fileId: string): Promise<string[][] | null> {
+export default async function(fileId: string): Promise<string[][]> {
   try {
     const rawData = await fetchData(fileId);
     const parsed = parse(rawData.body);
     const analyzedData = parseGeoData(parsed.data);
     return analyzedData;
   } catch (error) {
-    // tslint:disable-next-line no-console
-    console.error('ERROR fetching data!', error);
-    return null;
+    throw error;
   }
 }
 

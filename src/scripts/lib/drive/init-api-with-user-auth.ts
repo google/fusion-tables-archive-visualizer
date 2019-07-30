@@ -18,12 +18,18 @@
  * Load & Initialize Google Auth
  */
 export default function(): Promise<void> {
-  const script = document.createElement('script');
-  script.id = 'auth_script';
-  script.type = 'text/javascript';
-  script.src = 'https://apis.google.com/js/platform.js';
+  const scriptExists = document.querySelector(
+    'script[src="https://apis.google.com/js/platform.js"]'
+  );
   const head = document.getElementsByTagName('head')[0];
-  head.appendChild(script);
+  let script: HTMLScriptElement;
+
+  if (!scriptExists) {
+    script = document.createElement('script');
+    script.id = 'auth_script';
+    script.type = 'text/javascript';
+    script.src = 'https://apis.google.com/js/platform.js';
+  }
 
   const meta = document.createElement('meta');
   meta.setAttribute('name', 'google-signin-client_id');
@@ -31,7 +37,8 @@ export default function(): Promise<void> {
   head.appendChild(meta);
 
   return new Promise(resolve => {
-    script.onload = () => {
+    const signin = () => {
+      gapi.client.setApiKey('');
       gapi.signin2.render('signin', {
         scope: 'https://www.googleapis.com/auth/drive.file',
         width: 240,
@@ -51,5 +58,12 @@ export default function(): Promise<void> {
         onfailure: console.error
       });
     };
+
+    if (scriptExists) {
+      signin();
+    } else {
+      script.onload = signin;
+      head.appendChild(script);
+    }
   });
 }

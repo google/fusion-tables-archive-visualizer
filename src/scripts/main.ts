@@ -19,6 +19,7 @@
 import {GeoJsonLayer, IconLayer} from '@deck.gl/layers';
 import {GoogleMapsOverlay} from '@deck.gl/google-maps';
 import initMap from './lib/map/init-google-maps';
+import initApiWithKey from './lib/drive/init-api-with-key';
 import initApiWithUserAuth from './lib/drive/init-api-with-user-auth';
 import getParamsFromHash from './lib/get-params-from-hash';
 import fetchData from './lib/drive/fetch-data';
@@ -32,18 +33,17 @@ import {IStyle} from './interfaces/style';
 
 import '../styles/main.css';
 
+const API_KEY = process.env.API_KEY || '';
+
 (async () => {
-  const map = await initMap(process.env.GOOGLE_MAPS_API_KEY || '');
+  const map = await initMap(API_KEY);
+  const params = getParamsFromHash();
   const $signin = document.getElementById('signin');
+  let data: string[][] | null = null;
 
   if (!$signin) {
     return;
   }
-
-  await initApiWithUserAuth();
-  $signin.style.display = 'none';
-
-  const params = getParamsFromHash();
 
   if (!params.file) {
     console.error('Missing a file param containing the Google Drive File ID.');
@@ -54,7 +54,19 @@ import '../styles/main.css';
     showIsLargeWarning();
   }
 
-  const data = await fetchData(params.file);
+  try {
+    await initApiWithKey(API_KEY);
+    data = await fetchData(params.file);
+  } catch (error) {
+    try {
+      $signin.style.display = 'block';
+      await initApiWithUserAuth();
+      $signin.style.display = 'none';
+      data = await fetchData(params.file);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   finishLoading();
 
