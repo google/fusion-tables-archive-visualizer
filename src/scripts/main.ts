@@ -46,6 +46,7 @@ const API_KEY = process.env.API_KEY || '';
   }
 
   if (!params.file) {
+    ga('send', 'event', 'Visualizer', 'Error', 'Missing Google Drive File ID');
     console.error('Missing a file param containing the Google Drive File ID.');
     return;
   }
@@ -57,13 +58,14 @@ const API_KEY = process.env.API_KEY || '';
   try {
     await initApiWithKey(API_KEY);
     data = await fetchData(params.file);
-  } catch (error) {
+  } catch (unusedError) {
     try {
       $signin.style.display = 'block';
       await initApiWithUserAuth();
       $signin.style.display = 'none';
       data = await fetchData(params.file);
     } catch (error) {
+      ga('send', 'event', 'Visualizer', 'Error', 'Error loading data');
       console.error(error);
     }
   }

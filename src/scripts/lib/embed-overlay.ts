@@ -58,6 +58,7 @@ export default class {
     ) as HTMLTextAreaElement;
 
     this.$embedButton.addEventListener('click', () => {
+      ga('send', 'event', 'Visualizer', 'Embed Button Click');
       this.$embedButton.setAttribute('disabled', 'disabled');
       onClick();
     });
