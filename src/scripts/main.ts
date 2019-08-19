@@ -20,7 +20,10 @@ import {GeoJsonLayer, IconLayer} from '@deck.gl/layers';
 import {GoogleMapsOverlay} from '@deck.gl/google-maps';
 import initMap from './lib/map/init-google-maps';
 import initApiWithKey from './lib/drive/init-api-with-key';
+
+// Comment out the following line when OAuth is not desired.
 import initApiWithUserAuth from './lib/drive/init-api-with-user-auth';
+
 import getParamsFromHash from './lib/get-params-from-hash';
 import fetchData from './lib/drive/fetch-data';
 import deckGlGeojsonLayer from './lib/deck-gl/geojson-layer';
@@ -55,6 +58,7 @@ const API_KEY = process.env.API_KEY || '';
     showIsLargeWarning();
   }
 
+  // Start commenting out the following lines when OAuth is not desired.
   try {
     await initApiWithKey(API_KEY);
     data = await fetchData(params.file);
@@ -69,6 +73,17 @@ const API_KEY = process.env.API_KEY || '';
       console.error(error);
     }
   }
+  // End commenting out when OAuth is not desired.
+
+  // Uncomment the following lines when OAuth is not desired.
+  // try {
+  //   await initApiWithKey(API_KEY);
+  //   data = await fetchData(params.file);
+  // } catch (error) {
+  //   ga('send', 'event', 'Visualizer', 'Error', 'Error loading data');
+  //   console.error(error);
+  // }
+  // End uncommenting when OAuth is not desired.
 
   finishLoading();
 
