@@ -16,8 +16,16 @@
 
 // tslint:disable no-console
 
+declare global {
+  interface Window {
+    ga: any;
+    GoogleAnalyticsObject: string;
+  }
+}
+
 import {GeoJsonLayer, IconLayer} from '@deck.gl/layers';
 import {GoogleMapsOverlay} from '@deck.gl/google-maps';
+import './lib/analytics';
 import initMap from './lib/map/init-google-maps';
 import initApiWithKey from './lib/drive/init-api-with-key';
 

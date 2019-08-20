@@ -58,9 +58,9 @@ export default class {
     ) as HTMLTextAreaElement;
 
     this.$embedButton.addEventListener('click', () => {
-      ga('send', 'event', 'Visualizer', 'Embed Button Click');
       this.$embedButton.setAttribute('disabled', 'disabled');
       onClick();
+      ga('send', 'event', 'Visualizer', 'Embed Button Click');
     });
 
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(this.$embedButton);
