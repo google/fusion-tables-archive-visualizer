@@ -19,7 +19,7 @@
  */
 window.GoogleAnalyticsObject = 'ga';
 window.ga =
-window.ga ||
+  window.ga ||
   // tslint:disable-next-line only-arrow-functions
   function() {
     (window.ga.q = window.ga.q || []).push(arguments);
