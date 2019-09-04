@@ -41,6 +41,7 @@ export default function(data: string[][], style?: IStyle): GeoJsonLayer {
     lineWidthMinPixels: 1,
     pointRadiusMinPixels: 3,
     getRadius: 0,
+    wrapLongitude: true,
 
     getFillColor: (d: GeoJSON.Feature) => {
       if (!style) {

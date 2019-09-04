@@ -31,6 +31,7 @@ export default function(data: string[][], style?: IStyle): IconLayer {
     data: createIconsFromData(data) as any,
     getIcon: (d: IIcon) => getIconByName(getIconName(d, style)),
     getSize: (d: IIcon) => getIconSizeByName(getIconName(d, style)),
-    pickable: true
+    pickable: true,
+    wrapLongitude: true
   });
 }
