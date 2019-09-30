@@ -69,19 +69,23 @@ function getGeoJsonWithProperties(
     return null;
   }
 
-  const geoJson = JSON.parse(geoJsonString) as GeoJSON.Feature<any>;
-  geoJson.properties = columns.reduce(
-    (all: {[name: string]: any}, current: string, currentIndex: number) => {
-      if (current === 'geometry') {
+  try {
+    const geoJson = JSON.parse(geoJsonString) as GeoJSON.Feature<any>;
+    geoJson.properties = columns.reduce(
+      (all: {[name: string]: any}, current: string, currentIndex: number) => {
+        if (current === 'geometry') {
+          return all;
+        }
+
+        all[current] = row[currentIndex] || '';
+
         return all;
-      }
+      },
+      {}
+    );
 
-      all[current] = row[currentIndex] || '';
-
-      return all;
-    },
-    {}
-  );
-
-  return geoJson;
+    return geoJson;
+  } catch (error) {
+    return null;
+  }
 }

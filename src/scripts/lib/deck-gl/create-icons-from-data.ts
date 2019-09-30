@@ -55,25 +55,29 @@ function getIconWithProperties(
     return null;
   }
 
-  const geoJson = JSON.parse(geoJsonString) as GeoJSON.Feature<any>;
+  try {
+    const geoJson = JSON.parse(geoJsonString) as GeoJSON.Feature<any>;
 
-  if (geoJson.geometry.type !== 'Point') {
+    if (geoJson.geometry.type !== 'Point') {
+      return null;
+    }
+
+    return {
+      position: geoJson.geometry.coordinates,
+      properties: columns.reduce(
+        (all: {[name: string]: any}, current: string, currentIndex: number) => {
+          if (current === 'geometry') {
+            return all;
+          }
+
+          all[current] = row[currentIndex] || '';
+
+          return all;
+        },
+        {}
+      )
+    };
+  } catch (error) {
     return null;
   }
-
-  return {
-    position: geoJson.geometry.coordinates,
-    properties: columns.reduce(
-      (all: {[name: string]: any}, current: string, currentIndex: number) => {
-        if (current === 'geometry') {
-          return all;
-        }
-
-        all[current] = row[currentIndex] || '';
-
-        return all;
-      },
-      {}
-    )
-  };
 }
