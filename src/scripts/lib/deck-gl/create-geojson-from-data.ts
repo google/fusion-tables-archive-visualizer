@@ -28,7 +28,7 @@ export default function createGeojsonFromData(
   const columns = data[0];
   const geometryIndex = columns.indexOf('geometry');
 
-  if (geometryIndex < 0) {
+  if (geometryIndex === -1) {
     return null;
   }
 
