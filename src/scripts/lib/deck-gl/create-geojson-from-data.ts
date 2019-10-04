@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import getGeometryColumnName from '../get-geometry-column-name';
+
 /**
  * Create a GeoJSON FeatureCollection from the source data
  */
@@ -26,9 +28,11 @@ export default function createGeojsonFromData(
   };
 
   const columns = data[0];
-  const geometryIndex = columns.indexOf('geometry');
 
-  if (geometryIndex < 0) {
+  const geometryColumnName = getGeometryColumnName(data);
+  const geometryIndex = columns.indexOf(geometryColumnName);
+
+  if (geometryIndex === -1) {
     return null;
   }
 
@@ -40,7 +44,8 @@ export default function createGeojsonFromData(
     const geoJsonFeature = getGeoJsonWithProperties(
       row[geometryIndex],
       columns,
-      row
+      row,
+      geometryColumnName
     );
 
     if (
@@ -63,7 +68,8 @@ export default function createGeojsonFromData(
 function getGeoJsonWithProperties(
   geoJsonString: string,
   columns: string[],
-  row: string[]
+  row: string[],
+  geometryColumnName: string
 ): GeoJSON.Feature<any> | null {
   if (!geoJsonString) {
     return null;
@@ -72,7 +78,7 @@ function getGeoJsonWithProperties(
   const geoJson = JSON.parse(geoJsonString) as GeoJSON.Feature<any>;
   geoJson.properties = columns.reduce(
     (all: {[name: string]: any}, current: string, currentIndex: number) => {
-      if (current === 'geometry') {
+      if (current === geometryColumnName) {
         return all;
       }
 
