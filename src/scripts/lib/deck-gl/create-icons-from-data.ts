@@ -15,6 +15,7 @@
  */
 
 import {IIcon} from '../../interfaces/icon';
+import getGeometryColumnName from '../get-geometry-column-name';
 
 /**
  * Create an array of marker icons from the source data
@@ -22,7 +23,9 @@ import {IIcon} from '../../interfaces/icon';
 export default function createIconsFromData(data: string[][]): IIcon[] | null {
   const icons: IIcon[] = [];
   const columns = data[0];
-  const geometryIndex = columns.indexOf('geometry');
+
+  const geometryColumnName = getGeometryColumnName(data);
+  const geometryIndex = columns.indexOf(geometryColumnName);
 
   if (geometryIndex === -1) {
     return null;
@@ -33,7 +36,12 @@ export default function createIconsFromData(data: string[][]): IIcon[] | null {
       return;
     }
 
-    const icon = getIconWithProperties(row[geometryIndex], columns, row);
+    const icon = getIconWithProperties(
+      row[geometryIndex],
+      columns,
+      row,
+      geometryColumnName
+    );
 
     if (icon) {
       icons.push(icon);
@@ -49,7 +57,8 @@ export default function createIconsFromData(data: string[][]): IIcon[] | null {
 function getIconWithProperties(
   geoJsonString: string,
   columns: string[],
-  row: string[]
+  row: string[],
+  geometryColumnName: string
 ): IIcon | null {
   if (!geoJsonString) {
     return null;
